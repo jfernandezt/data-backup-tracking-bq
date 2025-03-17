@@ -1,0 +1,8 @@
+{
+    "sql_lista_daily":"SELECT STRING_AGG(fec_backup) AS lista FROM (SELECT FORMAT_DATE(\"'%Y-%m-%d'\", DATE_SUB(CURRENT_DATE('America/Lima'), INTERVAL Rango Day)) fec_backup FROM UNNEST(GENERATE_ARRAY(0, 4)) AS Rango ORDER BY 1)",
+    "sql_reporte_daily":"SELECT * FROM (SELECT project_id, dataset_id, table_id, tipo_carga, status, fec_backup, count_table FROM `iter-data-storage-pv.temp.log_backup_tabla` WHERE tipo_carga = 'daily') PIVOT(SUM(count_table) FOR fec_backup IN ({lista}))",
+    "sql_lista_weekly":"SELECT STRING_AGG(fec_backup) AS lista FROM (SELECT FORMAT_DATE(\"'%Y-%m-%d'\", DATE_TRUNC(DATE_SUB(CURRENT_DATE('America/Lima'), INTERVAL Rango*7 Day), WEEK(MONDAY) )) fec_backup FROM UNNEST(GENERATE_ARRAY(0, 4)) AS Rango ORDER BY 1)",
+    "sql_reporte_weekly":"SELECT * FROM (SELECT project_id, dataset_id, table_id, tipo_carga, status, fec_backup, count_table FROM `iter-data-storage-pv.temp.log_backup_tabla` WHERE tipo_carga = 'weekly') PIVOT(SUM(count_table) FOR fec_backup IN ({lista}))",
+    "sql_lista_monthly":"SELECT STRING_AGG(fec_backup) AS lista FROM (SELECT FORMAT_DATE(\"'%Y-%m-%d'\", DATE_SUB(DATE_TRUNC(CURRENT_DATE('America/Lima'), MONTH), INTERVAL Rango Month)) fec_backup FROM UNNEST(GENERATE_ARRAY(0, 4)) AS Rango ORDER BY 1)",
+    "sql_reporte_monthly":"SELECT * FROM (SELECT project_id, dataset_id, table_id, tipo_carga, status, fec_backup, count_table FROM `iter-data-storage-pv.temp.log_backup_tabla` WHERE tipo_carga = 'monthly') PIVOT(SUM(count_table) FOR fec_backup IN ({lista}))"
+ }

@@ -1,0 +1,6 @@
+pytest==7.0.1; python_version > "3.0"
+pytest==7.0.1; python_version < "3.0"
+google-cloud-storage==2.14.0
+google-cloud-bigquery==3.14.1
+sib-api-v3-sdk==7.6.0
+
